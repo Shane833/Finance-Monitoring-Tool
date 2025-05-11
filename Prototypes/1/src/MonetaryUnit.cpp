@@ -17,8 +17,21 @@ std::string MonetaryUnit::getActivity()
 }
 
 // Function to get the transaction mode
-TransactionMode MonetaryUnit::getTransactionMode()
+std::string MonetaryUnit::getTransactionMode()
 {
-	return tmode;
+	std::string s_tmode;
+	
+	switch(tmode)
+	{
+		case ONLINE:
+			s_tmode = "ONLINE";
+			break;
+		
+		case CASH:
+			s_tmode = "CASH";
+			break;
+	}
+	
+	return s_tmode;
 }
 

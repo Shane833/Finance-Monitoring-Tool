@@ -5,8 +5,8 @@
 
 // A little handy enumeration for defining the mode of transaction
 enum TransactionMode{
-	TM_ONLINE,
-	TM_CASH,
+	ONLINE,
+	CASH,
 	TM_TOTAL
 };
 
@@ -19,7 +19,7 @@ class MonetaryUnit
 		// Basic getter functions
 		int getAmount();
 		std::string getActivity();
-		TransactionMode getTransactionMode();
+		std::string getTransactionMode();
 		
 	private:
 		std::string activity; // This defines what activity caused that transaction
