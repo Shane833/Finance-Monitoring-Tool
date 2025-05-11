@@ -5,19 +5,19 @@ MonetaryUnit::MonetaryUnit(std::string activity, int amount, TransactionMode tmo
 :activity(activity),amount(amount),tmode(tmode){}
 
 // Function to get the amount
-int MonetaryUnit::getMU_Amount()
+int MonetaryUnit::getAmount()
 {
 	return amount;
 }
 
 // Function to get the activity
-std::string MonetaryUnit::getMU_Activity()
+std::string MonetaryUnit::getActivity()
 {
 	return activity;
 }
 
 // Function to get the transaction mode
-TransactionMode MonetaryUnit::getMU_TransactionMode()
+TransactionMode MonetaryUnit::getTransactionMode()
 {
 	return tmode;
 }

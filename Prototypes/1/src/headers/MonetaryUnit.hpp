@@ -16,9 +16,10 @@ class MonetaryUnit
 {
 	public:
 		MonetaryUnit(std::string activity, int amount, TransactionMode tmode);
-		int getMU_Amount();
-		std::string getMU_Activity();
-		TransactionMode getMU_TransactionMode();
+		// Basic getter functions
+		int getAmount();
+		std::string getActivity();
+		TransactionMode getTransactionMode();
 		
 	private:
 		std::string activity; // This defines what activity caused that transaction
