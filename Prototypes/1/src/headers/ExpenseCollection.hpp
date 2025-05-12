@@ -9,11 +9,13 @@
 class ExpenseCollection
 {
 	public:
-		ExpenseCollection();
+		ExpenseCollection(std::string title);
+		std::string getTitle();
 		void addTransaction(std::string activity, int amount, TransactionMode tmode, TransactionType ttype, Expenditure expense);
 		void displayTransactions();
 		
 	private:
+		std::string title;
 		std::vector<Transaction*> collection;
 };
 
