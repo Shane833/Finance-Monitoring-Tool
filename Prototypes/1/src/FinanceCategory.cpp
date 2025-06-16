@@ -13,3 +13,8 @@ TransactionManager* FinanceCategory::getTransactionManager(int index)
 {
 	return managers[index];
 }
+
+size_t FinanceCategory::getSize()
+{
+	return managers.size();
+}

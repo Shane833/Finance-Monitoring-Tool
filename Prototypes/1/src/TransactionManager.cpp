@@ -1,7 +1,7 @@
 #include <TransactionManager.hpp>
 
 TransactionManager::TransactionManager(std::string title)
-:title(title)
+:title(title),total(0)
 {}
 
 std::string TransactionManager::getTitle()
@@ -26,6 +26,16 @@ void TransactionManager::addTransaction(std::string activity, int amount, Transa
 Transaction* TransactionManager::getTransaction(int index)
 {
 	return transactions[index];
+}
+
+size_t TransactionManager::getSize()
+{
+	return transactions.size();
+}
+
+int TransactionManager::getTotal()
+{
+	return total;
 }
 
 void TransactionManager::displayTransactions()

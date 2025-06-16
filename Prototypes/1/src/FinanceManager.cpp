@@ -21,9 +21,22 @@ FinanceCategory* FinanceManager::getFinanceCategory(int index)
 
 void FinanceManager::update()
 {
-	if(!categories.empty()){
-		
+	if(categories.size()){
+		for(auto category : categories){
+			if(category->size()){
+				for(int i = 0;i < category->size();i++){
+					auto fc = getFinanceCategory(i);
+					
+					total += getFinanceCategory(i)->getTransactionManager(i)->getTotal();
+				}
+			}
+		}
 	}
+}
+
+int FinanceManager::getTotal()
+{
+	return total;
 }
 
 FinanceManager::~FinanceManager()

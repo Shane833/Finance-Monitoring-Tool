@@ -12,8 +12,10 @@ class TransactionManager
 		TransactionManager(std::string title);
 		~TransactionManager();
 		std::string getTitle();
+		int getTotal();
 		void addTransaction(std::string activity, int amount, TransactionMode tmode, TransactionType ttype, Expenditure expense);
 		Transaction* getTransaction(int index);
+		size_t getSize();
 		void displayTransactions();
 		
 	private:

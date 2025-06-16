@@ -13,5 +13,9 @@ int main()
 	tmgr->addTransaction("Movies",180,ONLINE,CREDIT,DEBT);
 	tmgr->displayTransactions();
 
+	fmgr.update();
+
+	std::cout << fmgr.getTotal() << std::endl;
+
 	return 0;
 }

@@ -11,6 +11,7 @@ class FinanceCategory{
 		void addTransactionManager(std::string title); // adds a transaction manager (like month)
 		TransactionManager* getTransactionManager(int index);
 		TransactionManager* removeTransactionManager(std::string title);
+		size_t getSize();
 		
 	private:
 		std::string title;
