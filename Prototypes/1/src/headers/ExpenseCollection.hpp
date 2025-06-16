@@ -15,8 +15,8 @@ class ExpenseCollection
 		void displayTransactions();
 		
 	private:
-		std::string title;
-		std::vector<Transaction*> collection;
+		std::string title; // Represents the title of the collection
+		std::vector<Transaction*> collection; // Collection of various transactions
 };
 
 #endif

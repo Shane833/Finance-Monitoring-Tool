@@ -8,9 +8,9 @@ OBJ=$(patsubst %.cpp,%.o, $(SRC))
 TARGET=main
 
 all: $(TARGET)
-
+s
 $(TARGET): $(OBJ)
-	$(CC) $(OBJ) -o $(TARGET)
+	$(CC) $(OBJ) -o $(TARGET) $(LIBS)
 
 clean: 
 	del /q $(TARGET).exe
