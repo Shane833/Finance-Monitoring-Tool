@@ -18,3 +18,10 @@ size_t FinanceCategory::getSize()
 {
 	return managers.size();
 }
+
+FinanceCategory::~FinanceCategory()
+{
+	for(auto tmgr: managers){
+		delete tmgr;
+	}
+}

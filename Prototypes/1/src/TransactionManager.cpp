@@ -55,3 +55,10 @@ void TransactionManager::displayTransactions()
 	}
 }
 
+TransactionManager::~TransactionManager()
+{
+	for(auto t : transactions){
+		delete t;
+	}
+}
+

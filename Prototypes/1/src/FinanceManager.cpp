@@ -1,6 +1,7 @@
 #include <FinanceManager.hpp>
 
 FinanceManager::FinanceManager()
+:total(0)
 {
 	load(); // load the data upon startup
 }
@@ -21,18 +22,15 @@ FinanceCategory* FinanceManager::getFinanceCategory(int index)
 
 void FinanceManager::update()
 {
-	if(categories.size()){
-		for(auto category : categories){
-			if(category->size()){
-				for(int i = 0;i < category->size();i++){
-					auto fc = getFinanceCategory(i);
-					
-					total += getFinanceCategory(i)->getTransactionManager(i)->getTotal();
-				}
-			}
+	// Just go through the list of all transaction and add up the sum
+	for(auto fc : categories){
+		for(size_t i = 0;i < fc->getSize();i++){
+			total += (int)fc->getTransactionManager(i)->getTotal();
 		}
-	}
+	}	
 }
+	
+
 
 int FinanceManager::getTotal()
 {
@@ -42,4 +40,8 @@ int FinanceManager::getTotal()
 FinanceManager::~FinanceManager()
 {
 	save(); // save the data when closing 
+
+	for(auto fc: categories){
+		delete fc;
+	}
 }
