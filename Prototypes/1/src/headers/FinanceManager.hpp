@@ -17,7 +17,7 @@ class FinanceManager{
 		FinanceCategory* getFinanceCategory(int index);
 		FinanceCategory* removeFinanceCategory(std::string title); // removes an expense collection
 		
-	private:
+	// private:
 		int total; // maintains overall total
 		std::vector<FinanceCategory*> categories;
 		std::vector<TransactionManager*> managers;

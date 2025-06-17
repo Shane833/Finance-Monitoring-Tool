@@ -4,6 +4,12 @@ TransactionManager::TransactionManager(std::string title)
 :title(title),total(0)
 {}
 
+TransactionManager::TransactionManager(std::string title,size_t size)
+:title(title),total(0)
+{
+	load(size);
+}
+
 std::string TransactionManager::getTitle()
 {
 	return title;
@@ -55,8 +61,34 @@ void TransactionManager::displayTransactions()
 	}
 }
 
+void TransactionManager::load(size_t size)
+{
+	
+}
+
+
+void TransactionManager::save()
+{
+	std::ofstream out(title + ".tmgr",std::ofstream::out);
+	
+	if(out){
+		for(Transaction * t: transactions){
+			out << t->getActivity() << "\n";
+			out << t->getAmount() << "\n";
+			out << t->getTransactionMode() << "\n";
+			out << t->getTransactionType() << "\n";
+			out << t->getExpenditure() << "\n";
+			out << t->getTime() << "\n";
+		}
+	}
+	
+	out.close();
+}
+
 TransactionManager::~TransactionManager()
 {
+	// Save the data before closing it
+	save();
 	for(auto t : transactions){
 		delete t;
 	}

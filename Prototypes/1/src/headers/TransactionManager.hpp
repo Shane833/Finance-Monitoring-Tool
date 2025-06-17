@@ -4,12 +4,14 @@
 #include <Transaction.hpp>
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 // This will repesent the collection of transactions for a given period of time 
 class TransactionManager
 {
 	public:
 		TransactionManager(std::string title);
+		TransactionManager(std::string title,size_t size);
 		~TransactionManager();
 		std::string getTitle();
 		int getTotal();
@@ -17,6 +19,8 @@ class TransactionManager
 		Transaction* getTransaction(int index);
 		size_t getSize();
 		void displayTransactions();
+		void save();
+		void load(size_t size);
 		
 	private:
 		std::string title; // Represents the title of the collection

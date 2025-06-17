@@ -4,11 +4,8 @@ FinanceManager::FinanceManager()
 :total(0)
 {
 	load(); // load the data upon startup
+	// update(); // load in the right total amount
 }
-
-void FinanceManager::load(){}
-
-void FinanceManager::save(){}
 
 void FinanceManager::addFinanceCategory(std::string title)
 {
@@ -30,11 +27,40 @@ void FinanceManager::update()
 	}	
 }
 	
-
-
 int FinanceManager::getTotal()
 {
 	return total;
+}
+
+void FinanceManager::load(){
+	// load the file named data.fmgr and create the objects with their respective names
+	// and sizes
+	std::ifstream in("data.fmgr", std::ifstream::in);
+	
+	if(in){
+		// load the size of categories for looping
+		int size;		
+		std::string title;
+		while(in >> title >> size){ // loop until the end of file
+			categories.push_back(new FinanceCategory(title, size));
+		}
+	}
+	
+}
+
+void FinanceManager::save()
+{
+	// I want to save the name of the Finance Categories and their sizes
+	std::ofstream out("data.fmgr",std::ofstream::out);
+	
+	if(out){		
+		for(auto fcat : categories){
+			out << fcat->getTitle() << "\n";
+			out << fcat->getSize() << "\n";
+		}
+	}
+	
+	out.close();
 }
 
 FinanceManager::~FinanceManager()
