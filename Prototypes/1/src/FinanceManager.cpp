@@ -37,15 +37,12 @@ void FinanceManager::load(){
 	// and sizes
 	std::ifstream in("data.fmgr", std::ifstream::in);
 	
-	if(in){
-		// load the size of categories for looping
-		int size;		
+	if(in){		
 		std::string title;
-		while(in >> title >> size){ // loop until the end of file
-			categories.push_back(new FinanceCategory(title, size));
+		while(in >> title){ // loop until the end of file
+			addFinanceCategory(title);
 		}
 	}
-	
 }
 
 void FinanceManager::save()
@@ -56,7 +53,7 @@ void FinanceManager::save()
 	if(out){		
 		for(auto fcat : categories){
 			out << fcat->getTitle() << "\n";
-			out << fcat->getSize() << "\n";
+			// out << fcat->getSize() << "\n"; I figured I didn't need to save their sizes
 		}
 	}
 	

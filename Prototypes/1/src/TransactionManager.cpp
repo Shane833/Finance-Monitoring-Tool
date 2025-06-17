@@ -2,12 +2,8 @@
 
 TransactionManager::TransactionManager(std::string title)
 :title(title),total(0)
-{}
-
-TransactionManager::TransactionManager(std::string title,size_t size)
-:title(title),total(0)
 {
-	load(size);
+	load();
 }
 
 std::string TransactionManager::getTitle()
@@ -18,6 +14,20 @@ std::string TransactionManager::getTitle()
 void TransactionManager::addTransaction(std::string activity, int amount, TransactionMode tmode, TransactionType ttype, Expenditure expense)
 {
 	transactions.push_back(new Transaction(activity,amount,tmode,ttype,expense));
+	// updating the running total
+	switch(ttype){
+		case DEBIT:
+			total -= amount;
+			break;
+		case CREDIT:
+			total += amount;
+			break;
+	}
+}
+
+void TransactionManager::addExistingTransaction(std::string activity, int amount, TransactionMode tmode, TransactionType ttype, Expenditure expense, std::string time)
+{
+	transactions.push_back(new Transaction(activity,amount,tmode,ttype,expense,time));
 	// updating the running total
 	switch(ttype){
 		case DEBIT:
@@ -52,18 +62,31 @@ void TransactionManager::displayTransactions()
 	
 	for(Transaction* t: transactions){
 		std::cout << "Transaction : " << i++ << std::endl;
-		std::cout << "Name : " << t->getActivity() << std::endl;
-		std::cout << "Amount : " << t->getAmount() << std::endl;
-		std::cout << "Transaction Mode : " << t->getTransactionMode() << std::endl;
-		std::cout << "Transaction Type : " << t->getTransactionType() << std::endl;
-		std::cout << "Expense Category: " << t->getExpenditure() << std::endl;
-		std::cout << "Transaction Time : " << t->getTime() << std::endl;
+		t->displayTransaction();
+		std::cout << std::endl;
 	}
 }
 
-void TransactionManager::load(size_t size)
+void TransactionManager::load()
 {
+	std::ifstream in(title + ".tmgr", std::ifstream::in);
 	
+	if(in){
+		// Read the data and load it up
+		std::string activity;
+		int amount;
+		int tmode;
+		int ttype;
+		int expense;
+		std::string time;
+		
+		while(in >> activity >> amount >> tmode >> ttype >> expense){
+			if(getline(in,time)){
+				time.erase(0,1); // removing the excess space that gets appended at the beginning
+				addExistingTransaction(activity, amount, (TransactionMode)tmode, (TransactionType)ttype, (Expenditure)expense, time);	
+			}
+		}
+	}
 }
 
 
@@ -73,12 +96,11 @@ void TransactionManager::save()
 	
 	if(out){
 		for(Transaction * t: transactions){
-			out << t->getActivity() << "\n";
-			out << t->getAmount() << "\n";
-			out << t->getTransactionMode() << "\n";
-			out << t->getTransactionType() << "\n";
-			out << t->getExpenditure() << "\n";
-			out << t->getTime() << "\n";
+			out << t->getActivity() << " " << t->getAmount() 
+									<< " " << t->getTransactionMode() 
+									<< " " << t->getTransactionType()
+									<< " " << t->getExpenditure()
+									<< " " << t->getTime() << "\n";
 		}
 	}
 	

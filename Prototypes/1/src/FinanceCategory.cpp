@@ -2,12 +2,8 @@
 
 FinanceCategory::FinanceCategory(std::string title)
 :title(title)
-{}
-
-FinanceCategory::FinanceCategory(std::string title,size_t size)
-:title(title)
 {
-	load(size);
+	load();
 }
 
 void FinanceCategory::addTransactionManager(std::string title)
@@ -30,9 +26,18 @@ size_t FinanceCategory::getSize()
 	return managers.size();
 }
 
-void FinanceCategory::load(size_t size)
+void FinanceCategory::load()
 {
+	// This function is called after the object has been created
+	// and then I can simply use that data to read a file
+	std::ifstream in(title + ".fcat", std::ifstream::in);
 	
+	if(in){
+		std::string tmgr_title;
+		while(in >> tmgr_title){
+			addTransactionManager(tmgr_title);
+		}
+	}
 }
 
 void FinanceCategory::save()
@@ -43,7 +48,7 @@ void FinanceCategory::save()
 	if(out){
 		for(auto tmgr : managers){
 			out << tmgr->getTitle() << "\n";
-			out << tmgr->getSize() << "\n";
+			// out << tmgr->getSize() << "\n"; I don't think I have to save the sizes
 		}
 	}
 	

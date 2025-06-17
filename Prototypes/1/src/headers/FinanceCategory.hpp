@@ -6,7 +6,6 @@
 class FinanceCategory{
 	public:
 		FinanceCategory(std::string title);
-		FinanceCategory(std::string title,size_t size);
 		~FinanceCategory();
 		std::string getTitle();
 		void addTransactionManager(std::string title); // adds a transaction manager (like month)
@@ -14,7 +13,7 @@ class FinanceCategory{
 		TransactionManager* removeTransactionManager(std::string title);
 		size_t getSize();
 		void save();
-		void load(size_t size);
+		void load();
 		
 	private:
 		std::string title;
