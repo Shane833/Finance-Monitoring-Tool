@@ -51,3 +51,69 @@ void Transaction::displayTransaction()
 	std::cout << "Expense Category: " << sgetExpenditure() << std::endl;
 	std::cout << "Transaction Time : " << getTime() << std::endl;
 }
+
+std::string Transaction::sgetTransactionMode()
+{
+	std::string s_tmode;
+	
+	switch(tmode)
+	{
+		case ONLINE:
+			s_tmode = "ONLINE";
+			break;
+		
+		case CASH:
+			s_tmode = "CASH";
+			break;
+	}
+	
+	return s_tmode;
+}
+
+std::string Transaction::sgetExpenditure()
+{
+	std::string s_expense;
+	
+	switch(expense){
+		case FOOD:
+			s_expense = "FOOD";
+			break;
+		case TRAVEL:
+			s_expense = "TRAVEL";
+			break;
+		case BOOKS:
+			s_expense = "BOOKS";
+			break;
+		case TECH:
+			s_expense = "TECH";
+			break;
+		case MOVIES:
+			s_expense = "MOVIES";
+			break;
+		case CLOTHES:
+			s_expense = "CLOTHES";
+			break;
+		case DEBT:
+			s_expense = "DEBT";
+			break;
+	}
+	
+	return s_expense;
+}	
+
+std::string Transaction::sgetTransactionType()
+{
+	std::string s_ttype;
+	
+	switch(ttype){
+		case CREDIT:
+			s_ttype = "CREDIT";
+			break;
+			
+		case DEBIT:
+			s_ttype = "DEBIT";
+			break;
+	}
+	
+	return s_ttype;
+}
