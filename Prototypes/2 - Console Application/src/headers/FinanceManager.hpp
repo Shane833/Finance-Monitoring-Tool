@@ -17,12 +17,11 @@ class FinanceManager{
 		void addFinanceCategory(std::string title); // Adds a category (like year)
 		FinanceCategory* getFinanceCategory(int index);
 		FinanceCategory* removeFinanceCategory(std::string title); // removes an expense collection
+		void list(); // Lists all the Transactions currently loaded
 		
 	// private:
 		int total; // maintains overall total
 		std::vector<FinanceCategory*> categories;
-		std::vector<TransactionManager*> managers;
-		std::vector<Transaction*> transactions;
 		std::string path; // represents our data directory
 };
 

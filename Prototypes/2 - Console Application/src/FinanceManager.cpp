@@ -42,6 +42,19 @@ std::string FinanceManager::getPath()
 	return path;
 }
 
+void FinanceManager::list()
+{
+	for(auto fc : categories){ // Going through Finance Categories
+		for(int i = 0;i < fc->getSize();i++){ // Going through Managers
+			// Print the name of the category
+			std::cout << "------***" << fc->getTitle() << "***------"<< std::endl;
+			// Print the various transactions
+			fc->getTransactionManager(i)->displayTransactions();
+		}
+	}
+
+}
+
 void FinanceManager::load(){
 	// Lets go looping through each of the available subdirectories
 	for(const auto &entry : std::filesystem::directory_iterator(path)){
