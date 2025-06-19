@@ -42,6 +42,11 @@ std::string FinanceManager::getPath()
 	return path;
 }
 
+size_t FinanceManager::getSize()
+{
+	return categories.size();
+}
+
 void FinanceManager::list()
 {
 	for(auto fc : categories){ // Going through Finance Categories

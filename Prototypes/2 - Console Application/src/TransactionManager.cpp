@@ -62,8 +62,6 @@ void TransactionManager::displayTransactions()
 {
 	int i = 1;
 	
-	std::cout << "\nMANAGER : " << title << "\n" << std::endl;
-	
 	for(Transaction* t: transactions){
 		std::cout << "Transaction : " << i++ << std::endl;
 		t->displayTransaction();

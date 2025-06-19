@@ -14,6 +14,7 @@ class FinanceManager{
 		void update(); // Function to update the amount
 		int getTotal(); 
 		std::string getPath();
+		size_t getSize();
 		void addFinanceCategory(std::string title); // Adds a category (like year)
 		FinanceCategory* getFinanceCategory(int index);
 		FinanceCategory* removeFinanceCategory(std::string title); // removes an expense collection
