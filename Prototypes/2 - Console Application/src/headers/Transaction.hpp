@@ -30,6 +30,7 @@ enum Expenditure
 	MOVIES,
 	CLOTHES,
 	DEBT,
+	BANK,
 	EC_TOTAL
 };
 
@@ -39,13 +40,19 @@ class Transaction
 	public:
 		Transaction(std::string activity, unsigned int amount, TransactionMode tmode, TransactionType ttype, Expenditure expense);
 		Transaction(std::string activity, unsigned int amount, TransactionMode tmode, TransactionType ttype, Expenditure expense, std::string time);
+		// Get Functions
 		unsigned int getAmount();
 		std::string getActivity();
 		TransactionMode getTransactionMode();
 		std::string getTime();
 		TransactionType getTransactionType();
 		Expenditure getExpenditure();
+		// Set Functions
+		void setAmount(unsigned int amount);
+		// Display Function
 		void displayTransaction();	
+		
+		
 		
 	private:
 		std::string sgetTransactionMode();

@@ -42,6 +42,11 @@ Expenditure Transaction::getExpenditure()
 	return expense;
 }
 
+void Transaction::setAmount(unsigned int amount){
+	this->amount = amount;
+}
+
+
 void Transaction::displayTransaction()
 {
 	std::cout << "Name : " << getActivity() << std::endl;
@@ -95,6 +100,9 @@ std::string Transaction::sgetExpenditure()
 			break;
 		case DEBT:
 			s_expense = "DEBT";
+			break;
+		case BANK:
+			s_expense = "BANK";
 			break;
 	}
 	

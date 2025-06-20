@@ -4,7 +4,7 @@ void FC(FinanceCategory * fcat); // The whole loop for accessing Finance Categor
 void TMgr(TransactionManager * tmgr); // The whole loop for accessing the Transaction Manager Features
 
 // Menu Functions
-void FM_menu();
+void FM_menu(FinanceManager * fmgr);
 void FC_menu(FinanceCategory * fcat);
 void TMgr_menu(TransactionManager * tmgr);
 
@@ -22,12 +22,8 @@ void TMgr_createTransaction(TransactionManager * tmgr);
 void FM_selectCategory(FinanceManager * fmgr);
 void FC_selectManager(FinanceCategory * fcat);
 
-
 int main(int argc, char* argv[])
 {
-	// c - create
-	// s - select
-	// l - list
 	
 	// I feel this application should be more menu based
 	// So, I'll start an infinite loop with options to select from
@@ -36,13 +32,21 @@ int main(int argc, char* argv[])
 	bool quit = false; // variale to quit the application
 	
 	// Print the menu
-	FM_menu();
+	FM_menu(&fmgr);
 	
 	while(!quit){
 		
 		while(std::cin >> ch){ // Keep scanning the character
 			
 			switch(ch){
+				case 'a':{ // Quickly adds transactions 
+					TMgr_createTransaction(fmgr.getDefaultManager());
+					break;
+				}
+				case 'd':{ // quickly displays those transactions
+					TMgr_listTransactions(fmgr.getDefaultManager());
+					break;
+				}
 				case 'c':{ // option to create a category
 					// Just learned that we should enclose the statements in switch cases
 					// within a block as they are implemented using jump tables and there is
@@ -66,7 +70,7 @@ int main(int argc, char* argv[])
 			} 
 			
 			// Print the menu
-			FM_menu();
+			FM_menu(&fmgr);
 		}
 	}
 	
@@ -132,11 +136,14 @@ void TMgr(TransactionManager * tmgr)
 }
 
 // Prints the main menu
-void FM_menu()
+void FM_menu(FinanceManager * fmgr)
 {
-	// 1. I want to display a Welcome screen
-	std::cout << "FINANCE MONITOR v1.0" << std::endl;
+	// 1. I want to display a Welcome screen and total money
+	std::cout << "\nFINANCE MONITOR v1.0" << std::endl;
+	fmgr->displayTotal();
 	// 2. Provide a list of options that the user can select
+	std::cout << "a - quick add transaction" << std::endl;
+	std::cout << "d - quick list current transactions" << std::endl;
 	std::cout << "c - create a Category" << std::endl;
 	std::cout << "s - select a Category" << std::endl;
 	std::cout << "l - list all Categories" << std::endl;
@@ -212,7 +219,7 @@ void TMgr_createTransaction(TransactionManager * tmgr)
 	std::cout << "Your choice : ";
 	std::cin >> ttype;
 	
-	std::cout << "Enter the Expenditure Category \n(0 : FOOD, 1 : TRAVEL, 2 : BOOKS, 3 : TECH, 4 : MOVIES, 5 : CLOTHES, 6 : DEBT\n";
+	std::cout << "Enter the Expenditure Category \n(0 : FOOD, 1 : TRAVEL, 2 : BOOKS, 3 : TECH, 4 : MOVIES, 5 : CLOTHES, 6 : DEBT, 7 : BANK\n";
 	std::cout << "Your choice : ";
 	std::cin >> expense;
 	
@@ -291,6 +298,10 @@ void FC_selectManager(FinanceCategory * fcat)
 	
 	std::cout << std::endl;
 }
+
+
+
+
 
 
 

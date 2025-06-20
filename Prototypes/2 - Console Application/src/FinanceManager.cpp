@@ -1,15 +1,14 @@
 #include <FinanceManager.hpp>
 
 FinanceManager::FinanceManager()
-:total(0),path("data")
+:path("data")
 {
 	// check if the data directory exists
-	if(std::filesystem::exists(path)){
-		load(); // load the data upon startup
-		//update(); // load in the right total amount
-	}else{
+	if(!std::filesystem::exists(path)){
 		std::filesystem::create_directory(path);
-	}	
+	}
+	// however do the default transaction Manager
+	tmgr = new TransactionManager("default",path);
 }
 
 void FinanceManager::addFinanceCategory(std::string title)
@@ -21,22 +20,7 @@ FinanceCategory* FinanceManager::getFinanceCategory(int index)
 {
 	return categories[index];
 }
-
-void FinanceManager::update()
-{
-	// Just go through the list of all transaction and add up the sum
-	for(auto fc : categories){
-		for(size_t i = 0;i < fc->getSize();i++){
-			total += (int)fc->getTransactionManager(i)->getTotal();
-		}
-	}	
-}
 	
-int FinanceManager::getTotal()
-{
-	return total;
-}
-
 std::string FinanceManager::getPath()
 {
 	return path;
@@ -47,18 +31,18 @@ size_t FinanceManager::getSize()
 	return categories.size();
 }
 
-void FinanceManager::list()
+TransactionManager* FinanceManager::getDefaultManager()
 {
-	for(auto fc : categories){ // Going through Finance Categories
-		for(int i = 0;i < fc->getSize();i++){ // Going through Managers
-			// Print the name of the category
-			std::cout << "------***" << fc->getTitle() << "***------"<< std::endl;
-			// Print the various transactions
-			fc->getTransactionManager(i)->displayTransactions();
-		}
-	}
-
+	return tmgr;
 }
+
+void FinanceManager::displayTotal()
+{
+	std::cout << "Total : " << tmgr->getTotalCash() + tmgr->getTotalOnline() 
+			  << " (Cash : " << tmgr->getTotalCash() << ", Online : " << tmgr->getTotalOnline()
+			  << ")" << std::endl;	
+}
+
 
 void FinanceManager::load(){
 	// Lets go looping through each of the available subdirectories
@@ -82,6 +66,8 @@ FinanceManager::~FinanceManager()
 {
 	save(); // save the data when closing 
 
+	delete tmgr;
+	
 	for(auto fc: categories){
 		delete fc;
 	}

@@ -11,19 +11,19 @@ class FinanceManager{
 		~FinanceManager(); // Destructor
 		void load(); // Function to load the data
 		void save(); // Function to save the data
-		void update(); // Function to update the amount
-		int getTotal(); 
+		void updateTotal(); // Function to calculate the total including cash and online
 		std::string getPath();
 		size_t getSize();
 		void addFinanceCategory(std::string title); // Adds a category (like year)
 		FinanceCategory* getFinanceCategory(int index);
 		FinanceCategory* removeFinanceCategory(std::string title); // removes an expense collection
-		void list(); // Lists all the Transactions currently loaded
-		
-	// private:
-		int total; // maintains overall total
+		TransactionManager* getDefaultManager();
+		void displayTotal();
+	private:
 		std::vector<FinanceCategory*> categories;
 		std::string path; // represents our data directory
+		TransactionManager * tmgr; // adding a default manager
+		
 };
 
 #endif
