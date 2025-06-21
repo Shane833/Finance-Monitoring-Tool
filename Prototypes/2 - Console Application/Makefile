@@ -1,4 +1,4 @@
-CPPFLAGS=-Wall -g -Isrc/headers
+CPPFLAGS=-Wall -g -Isrc
 LIBS=
 CC=g++
 SANITIZE = -fsanitize=address

@@ -1,4 +1,6 @@
 #include <FinanceManager.hpp>
+#include <cctype> // used for checking the inputs
+#include <limits> // used for clearing the stream
 
 void FC(FinanceCategory * fcat); // The whole loop for accessing Finance Category features
 void TMgr(TransactionManager * tmgr); // The whole loop for accessing the Transaction Manager Features
@@ -35,7 +37,7 @@ int main(int argc, char* argv[])
 	FM_menu(&fmgr);
 	
 	while(!quit){
-		
+
 		while(std::cin >> ch){ // Keep scanning the character
 			
 			switch(ch){
@@ -69,6 +71,8 @@ int main(int argc, char* argv[])
 				break;
 			} 
 			
+			// flush newline, so that none of the output from last command gets copied
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 			
 			// Print the menu
 			FM_menu(&fmgr);
 		}
@@ -102,7 +106,7 @@ void FC(FinanceCategory * fcat)
 			}
 		}
 		if(fch == 'b') break;
-		
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 			
 		// Print the menu
 		FC_menu(fcat);
 	}
@@ -129,7 +133,7 @@ void TMgr(TransactionManager * tmgr)
 			}
 		}
 		if(tch == 'b') break;
-		
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 			
 		// Print the menu
 		TMgr_menu(tmgr);
 	}
@@ -175,30 +179,72 @@ void TMgr_menu(TransactionManager * tmgr)
 // Create a category
 void FM_createCategory(FinanceManager * fmgr)
 {
-	std::string name;
-	std::cout << "Enter the name of your category : ";
-	std::cin >> name;
+	std::string input;
 	
-	fmgr->addFinanceCategory(name);
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // flush newline
+	std::cout << "\nEnter the name of category : ";
+	std::cin >> input;
 	
+	// checking the input
+	if(!input.empty()){
+		// Check if the string alpha num or underscore
+		for(char c : input){
+			if(!(isalnum(c) || c == '_')){
+				input = "Invalid Category Name! (Alphabets, Numbers and Underscores only)";
+				goto error;
+			}
+		}
+			fmgr->addFinanceCategory(input);
+	}else{
+		input = "Empty Input!"; // set the error message
+		goto error;
+	}
+
+	std::cout << "[INFO] : Added Category - " << input << std::endl;
+	std::cout << std::endl;
+	return;
+error:
+	std::cout << "[ERROR] : Failed to add Category - " << input << std::endl;
 	std::cout << std::endl;
 }
 
 // Create a Manager
 void FC_createManager(FinanceCategory * fcat)
 {
-	std::string title;
+	std::string input;
+	
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // flush newline
 	std::cout << "\nEnter the name of Manager : ";
-	std::cin >> title;
+	std::cin >> input;
 	
-	fcat->addTransactionManager(title);
-	
+	// checking the input
+	if(!input.empty()){
+		// Check if the string alpha num or underscore
+		for(char c : input){
+			if(!(isalnum(c) || c == '_')){
+				input = "Invalid Manager Name! (Alphabets, Numbers and Underscores only)";
+				goto error;
+			}
+		}
+			fcat->addTransactionManager(input);
+	}else{
+		input = "Empty Input!"; // set the error message
+		goto error;
+	}
+
+	std::cout << "[INFO] : Added Manager - " << input << std::endl;
+	std::cout << std::endl;
+	return;
+error:
+	std::cout << "[ERROR] : Failed to add Manager - " << input << std::endl;
 	std::cout << std::endl;
 }
 
 // Create a transaction
 void TMgr_createTransaction(TransactionManager * tmgr)
 {
+	std::string input; // string which will hold the input for type checking
+					  // also for displaying error messages if encountered
 	std::string activity;
 	unsigned int amount; 
 	int tmode;
@@ -206,25 +252,90 @@ void TMgr_createTransaction(TransactionManager * tmgr)
 	int expense; 
 	
 	std::cout << "\nEnter the Activity Name : ";
-	std::cin >> activity;
+	std::cin >> input;
+	// checking the input
+	if(!input.empty()){
+		// Check if the string alpha num or underscore
+		for(char c : input){
+			if(!(isalnum(c) || c == '_')){
+				input = "Invalid Activity Name! (Alphabets, Numbers and Underscores only)";
+				goto error;
+			}
+		}
+		activity = input; // simply copy the data
+		
+	}else{
+		input = "Empty Input!"; // set the error message
+		goto error;
+	}
+	
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // flush newline
 	
 	std::cout << "Enter the amount : ";
-	std::cin >> amount;
+	std::cin >> input; 
+	// check the input
+	if(!input.empty()){
+		for(char c : input){
+			if(!isdigit(c)){
+				input = "Invalid Amount!";
+				goto error;
+			}
+		}
+		// Set the value
+		amount = std::stoi(input); // returns the absolute amount i.e. +ve4
+								   // However I won't be needing abs since '-' character is not a digit
+								   // which gets checked above
+	} else{
+		input = "Empty Input!";
+		goto error;
+	}
+	
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // flush newline
 	
 	std::cout << "Choose the Transaction Mode \n(0 : ONLINE, 1 : CASH)\n";
 	std::cout << "Your choice : ";
-	std::cin >> tmode;
+	std::cin >> input;
+	// check the input
+	if(!input.empty() && input.size() == 1 && isdigit(input[0]) && abs(std::stoi(input)) < TM_TOTAL){
+		tmode = std::stoi(input);
+	}else{
+		input = "Invalid Transaction Mode!";
+		goto error;
+	}
+	
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // flush newline
 	
 	std::cout << "Enter the Transaction Type \n(0 : CREDIT, 1 : DEBIT)\n";
 	std::cout << "Your choice : ";
-	std::cin >> ttype;
+	std::cin >> input;
+	// check the input
+	if(!input.empty() && input.size() == 1 && isdigit(input[0]) && abs(std::stoi(input)) < TT_TOTAL){
+		ttype = std::stoi(input);
+	}else{
+		input = "Invalid Transaction Type!";
+		goto error;
+	}
 	
-	std::cout << "Enter the Expenditure Category \n(0 : FOOD, 1 : TRAVEL, 2 : BOOKS, 3 : TECH, 4 : MOVIES, 5 : CLOTHES, 6 : DEBT, 7 : BANK\n";
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // flush newline
+	
+	std::cout << "Enter the Expenditure Category \n(0 : FOOD, 1 : TRAVEL, 2 : BOOKS, 3 : TECH, 4 : MOVIES, 5 : CLOTHES, 6 : DEBT, 7 : BANK)\n";
 	std::cout << "Your choice : ";
-	std::cin >> expense;
+	std::cin >> input;
+	// check the input
+	if(!input.empty() && input.size() == 1 && isdigit(input[0]) && abs(std::stoi(input)) < EC_TOTAL){
+		expense = std::stoi(input);
+	}else{
+		input = "Invalid Expenditure Category!";
+		goto error;
+	}
 	
 	tmgr->addTransaction(activity, amount, (TransactionMode)tmode, (TransactionType)ttype, (Expenditure)expense);
-
+	std::cout << "[INFO] : Added Transaction - " << activity << std::endl;
+	std::cout << std::endl;
+	return;
+	
+error: // incase the input is invalid
+	std::cout << "[ERROR] : Failed to add Transaction - " << input << std::endl;
 	std::cout << std::endl;
 }
 
@@ -298,12 +409,3 @@ void FC_selectManager(FinanceCategory * fcat)
 	
 	std::cout << std::endl;
 }
-
-
-
-
-
-
-
-
-
