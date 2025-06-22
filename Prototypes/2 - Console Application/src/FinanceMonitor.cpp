@@ -170,6 +170,7 @@ void FC_menu(FinanceCategory * fcat)
 void TMgr_menu(TransactionManager * tmgr)
 {
 	std::cout <<"\nSelected Manager : " << tmgr->getTitle() << std::endl;
+	tmgr->displayTotal();
 	std::cout << "c - create a Transaction" << std::endl;
 	std::cout << "l - list all Transactions" << std::endl;
 	std::cout << "b - back to Category menu" << std::endl;
@@ -343,6 +344,10 @@ error: // incase the input is invalid
 void FM_listCategories(FinanceManager * fmgr)
 {
 	// List all the categories by name
+	// Check if the categories are already loaded
+	// and If not then load them
+	if(!fmgr->getSize()) fmgr->load();
+
 	size_t i = 0;
 	std::cout << "\nAll Categories : " << std::endl;
 	for(i = 0;i < fmgr->getSize();i++){
@@ -371,6 +376,8 @@ void TMgr_listTransactions(TransactionManager * tmgr)
 // Select a Category
 void FM_selectCategory(FinanceManager * fmgr)
 {
+	// First check if the categories are there
+	if(!fmgr->getSize()) fmgr->load();
 	// Ask for the correct category
 	size_t i = 0;
 	std::cout << "\nChoose the category(number) : ";

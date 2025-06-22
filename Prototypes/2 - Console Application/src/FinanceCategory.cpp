@@ -32,6 +32,11 @@ size_t FinanceCategory::getSize()
 	return managers.size();
 }
 
+void FinanceCategory::displayTotal()
+{
+	// Probably should save that in a file too
+}
+
 void FinanceCategory::load()
 {
 	// We will go inside the directory and list all the *.tmgr files

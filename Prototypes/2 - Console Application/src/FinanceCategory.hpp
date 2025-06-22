@@ -15,6 +15,7 @@ class FinanceCategory{
 		size_t getSize();
 		void save();
 		void load();
+		void displayTotal();
 		
 	private:
 		std::string title;

@@ -20,6 +20,7 @@ class TransactionManager
 		Transaction* getTransaction(int index);
 		size_t getSize();
 		void displayTransactions();
+		void displayTotal();
 		void save();
 		void load();
 		void updateTotal(); // checks if the total in the file is equal to the total from transactions

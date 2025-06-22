@@ -58,6 +58,13 @@ int TransactionManager::getTotalOnline()
 	return total_online;
 }
 
+void TransactionManager::displayTotal()
+{
+	std::cout << "Total : " << total_cash + total_online 
+			  << " (Cash : " << total_cash << ", Online : " << total_online
+			  << ")" << std::endl;	
+}
+
 void TransactionManager::displayTransactions()
 {
 	size_t i = 1;

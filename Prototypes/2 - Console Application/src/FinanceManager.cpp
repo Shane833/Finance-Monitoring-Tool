@@ -47,7 +47,10 @@ void FinanceManager::displayTotal()
 void FinanceManager::load(){
 	// Lets go looping through each of the available subdirectories
 	for(const auto &entry : std::filesystem::directory_iterator(path)){
-		addFinanceCategory(entry.path().filename().string());
+		// Only load it in if its a directory
+		if(std::filesystem::is_directory(entry.path())){
+			addFinanceCategory(entry.path().filename().string());
+		}
 	}
 }
 
