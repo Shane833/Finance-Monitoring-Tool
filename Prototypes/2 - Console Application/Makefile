@@ -6,7 +6,7 @@ SANITIZE = -fsanitize=address
 SRC=$(wildcard src/*.cpp)
 OBJ=$(patsubst %.cpp,%.o, $(SRC))
 
-TARGET=FinanaceMonitor
+TARGET=FinanceMonitor
 
 all: $(TARGET)
 
